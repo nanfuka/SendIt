@@ -193,6 +193,16 @@ a{
       }
       .ord label{
           float: left;
+        
+      }
+      input{
+          width: 80%;
+      }
+      .admins{
+          font-size: 150%;
+      }
+      .admin-front{
+          background-color: #999;
       }
       .order-list{
           text-align: center;   
