@@ -1,0 +1,248 @@
+resetting browser stuff
+*     {
+    box-sizing: border-box;
+  }
+  html,
+  body   {
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    font-size: 16px;
+  }
+  
+  /* styling our overall page */
+  body     {
+    background: #FFF;
+    font-family: Arial, Helvetica, sans-serif;
+    
+    background-image: url("cou.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    
+  }
+  
+  /* styling our header */
+  header   {
+    background: rgb(160, 157, 157);
+    color: rgba(253, 249, 249, 0.015);
+    padding: 20px 30px;
+  }
+  
+  /* logo */
+  #logo         {
+    display: inline-block;
+    color: #FFF;
+   
+    width: 49%;
+  }
+  #logo img    {
+    width: 50px;
+    border-radius: 3px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  #logo span   {
+    display: inline-block;
+  }
+  
+  /* main navigation */
+  nav     {
+    width: 50%;
+    display: inline-block;
+    text-align: right;
+  }
+  nav ul   {
+    list-style: none;
+    margin: 0;
+  }
+  nav ul li {
+    display: inline-block;
+  }
+  nav ul li a    {
+ color: #FFF;
+text-decoration: none;
+display: block;
+padding: 10px 15px;
+border-radius: 3px;
+transition: 0.3s ease all;
+font-size: 120%;
+font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+  nav ul li a:hover   {
+    background: #444;
+  }
+  
+  /* styling our footer */
+  footer   {
+    background: #222;
+    color: #777;
+    padding: 40px;
+    text-align: center;
+  }
+  footer img   {
+    display: block;
+    border-radius: 5px;
+    width: 80px;
+    margin: 0 auto 10px;
+  }
+  fieldset{
+      margin: 0 auto;
+      width: 40%;
+      text-align: center;
+  
+      display: block;
+    
+
+      
+  }
+  label{
+      text-align: center; 
+      margin-top: 10%;
+  }
+  input{
+      width:40%; 
+      height: 40%;
+      padding: 2%;
+      margin-top: 2%;
+     
+  }
+  .container input{
+    width:60%; 
+    height: 40%;
+    padding: 2%;
+    margin-top: 2%;
+  }
+  .container fieldset{
+      width: 30%;
+      float: center;
+  }
+  .logbottom{
+      size:50%;
+  }
+.front{
+    background-color: rgb(248, 245, 245);
+}
+  
+  /* styling our main content */
+.container fieldset{
+    background-color: #777;
+    font-weight: bolder;
+    size: 120%;
+}
+.container h1, p{
+    text-align: center;
+    font-weight: bolder;
+    font-size: 150%;
+}
+
+.signup{
+text-align: center;
+text-decoration: none;
+}
+a{
+    text-decoration: none;
+}
+.signup button{
+
+        display: inline-block;
+        padding: 5px 5px;
+        font-size: 24px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 9px #999;
+      }
+      
+      .signup button:hover {background-color: #3e8e41}
+      
+      .signup button:active {
+        background-color: #3e8e41;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+      }
+      .content{
+          width: 150%;
+          height:150%;
+          background-image: url("cou.jpg");
+          background-color: #cccccc;
+
+      }
+      .content p{
+          text-align: center;
+      }
+      td{
+          text-align: center;
+      }
+      .rows1{
+        background: #222;
+        color: #FFF;
+        padding: 20px 30px;
+      }
+      .brav span{
+          padding-left: 40%;
+      }
+      .response {
+        display: inline;
+        width: 47%;
+        padding: 1%;
+      }
+      .ord label{
+          float: left;
+        
+      }
+      input{
+          width: 80%;
+      }
+      .admins{
+          font-size: 150%;
+      }
+      .admin-front{
+          background-color: #999;
+      }
+      .order-list{
+          text-align: center;   
+      }
+      .order-list fieldset{
+          background-color: aliceblue;
+      }
+      .order-list button{
+          margin-top: 2%;
+          font-size: 120%;
+    
+      }
+      .container input{
+          width: 90%;
+      }
+      fieldset{
+          margin-top: 2%;
+          margin-bottom: 2%;
+      }
+      .order label{
+          font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+          font-size: 120%;
+      }
+      .logo-title{
+          font-family: cursive;
+          font-size: 120%;
+          color: darkred;
+          font-weight: bolder;
+      }
+      footer{
+          margin-top: 20%;
+      }
+      .contain{
+          background-color: #999;
+      }
+
+
+
+
+
+
+
+ 
