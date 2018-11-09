@@ -7,9 +7,10 @@ from flask import request
 
 class Models:
 
-    def __init__(self, users=[]):
+    def __init__(self, users = [], orders = []):
 
         self.users = users
+        self.orders = orders
         self.key = "my Jesus I love thee"
 
     def create_user(self, user):
@@ -28,4 +29,12 @@ class Models:
                 return item
             else:
                 return None
+
+    def add_orders(self, requests):
+        """
+        function for placing a new order.
+        this appends the newly placed order to the list of orders
+        """
+        self.orders.append(requests)
+        return requests
 
