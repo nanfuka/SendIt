@@ -8,8 +8,7 @@ from api.orders import Parcel
 
 app = Flask(__name__)
 
-# parcel = Parcel(1, 1, 'kal@yahoo.com', 'cassava', 46, 'Deb', 'kalungi', 'masaka', 'deb', 'luweero')
-parcel = Parcel(1, 1,'kal@yahoo.com')
+parcel = Parcel(1, 1, 'kal@yahoo.com', 'cassava', 46, 'Deb', 'kalungi', 'masaka', 'deb', 'luweero')
 order_list = []
 
 @app.route('/')
@@ -20,28 +19,35 @@ def index():
 def send_parcel():
     
     data = request.get_json(force=True)
-  
-    user_id = data.get('user_id')
-    email = data.get('email')
-    # item_to_be_shipped = data.get('item_to_be_shipped', None)
-    # weight = data.get('weight', None)
-    # name_of_sender = data.get('name_of_sender', None)
-    # name_of_reciever = data.get('name_of_reciever', None)
-    # destination = data.get('destination', None)
-    # username = data.get('username', None)
-    # itemcurrentlocation = data.get('itemcurrentlocation', None)
+    order_id = data.get('order_id', None)
+    user_id = data.get('user_id', None)
+    email = data.get('email', None)
+
+
+
+    item_to_be_shipped = data.get('item_to_be_shipped', None)
+    weight = data.get('weight', None)
+    name_of_sender = data.get('name_of_sender', None)
+
+    name_of_reciever = data.get('name_of_reciever', None)
+    destination = data.get('destination', None)
+    name_of_sender = data.get('name_of_sender', None)
+
+    username = data.get('username', None)
+    itemcurrentlocation = data.get('itemcurrentlocation', None)
 
     
-    parcel = { 'order_id' : len(order_list)+1,
-        'user_id' :user_id,
-        'email':email,
-        # item_to_be_shipped :'item_to_be_shipped',
-        # weight :'weight',
-        # name_of_sender :'name_of_sender',
-        # name_of_reciever :'name_of_reciever',
-        # destination :'destination',
-        # username:'username',
-        # itemcurrentlocation :'itemcurrentlocation'
+    parcel = { order_id : 'order_id',
+        user_id :'user_id',
+        email:'email',
+        item_to_be_shipped :'item_to_be_shipped',
+        weight :'weight',
+        name_of_sender :'name_of_sender',
+        name_of_reciever :'name_of_reciever',
+        destination :'destination',
+        name_of_sender:'name_of_sender',
+        username:'username',
+        itemcurrentlocation :'itemcurrentlocation'
     }
     order_list.append(parcel)
     return jsonify({"parcel successfully created":parcel})
@@ -50,29 +56,23 @@ def send_parcel():
 def get_parcel():
     return jsonify(order_list)
 
-@app.route('/api/v1/parcels/<int:parcelId>', methods=['GET'])
+@app.route('/api/v1/parcels/<parcelId>', methods=['GET'])
 def api_get_sepecific_order(parcelId):
     """this function fetches details
      about a specific order"""
     for i in order_list:
-        if i['order_id'] == parcelId:
-            return jsonify({"message":i})
+        if i['order_Id'] == parcelId:
+            return jsonify(i)
 
-@app.route('/api/v1/users/<int:userId>/parcels', methods=['GET'])
+@app.route('/api/v1/users/<userId>/parcels', methods=['GET'])
 def api_get_all_orders_for_specific_user(userId):
-    for parcel in order_list:
-        if parcel['user_id'] == userId:
-            return jsonify(parcel)
+    for i in order_list:
+        if i['user_Id'] == userId:
+            return jsonify(i)
 
-@app.route('/api/v1/parcels/<int:parcelId>/cancel', methods=['PUT'])
-def Cancel_specific_parcel_delivery_order(parcelId):
-    for parcel in order_list:
-        if parcel['order_id'] == parcelId:
-                # parcel["status"] = "cancelled"
-            order_list.pop(parcel)
-            return jsonify({"Parcel delivery order cancelled":parcel})
-        else:
-            return jsonify({'message':'you dont have rights to modify that parcel'})
+@app.route('/api/v1/parcels/<parcelId>/cancel', methods=['PUT'])
+def Cancel_specific_parcel_delivery_order(userId):
+    pass
 
 
 
