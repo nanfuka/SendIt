@@ -1,7 +1,0 @@
-{
-  "test_create_requests.py": true,
-  "test_create_requests.py::TestSendParcel::test_api_when_no_parameters_have_been_passed": true,
-  "test_create_requests.py::TestSendParcel::test_api_when_parameters_have_been_passed": true,
-  "tests/base_test.py": true,
-  "tests/test_create_request.py": true
-}

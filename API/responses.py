@@ -27,5 +27,3 @@ create_request_successful = {
         'success': True,
         'message': "Your request was submitted successfully.",
         }
-requests = [{'orderId': '2004', 'foodorder': 'bacBHHHon',
-            u'description': u'fresh', 'quantity': '3'}]
