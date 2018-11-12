@@ -11,10 +11,10 @@ login_fail = {
         'success': False,
         'message': "Login Failed."
         }
-auth_fail = {
-        'success': False,
-        'message': "You are not authorised to access this page."
+empty_list = {
+        'message':"There are no parsels at the moment"
         }
+
 request_fail = {
         'success': False,
         'message': "Not a valid Request ID."

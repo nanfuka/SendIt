@@ -1,15 +1,15 @@
 from flask import Flask, jsonify, request
-# from api.model.responses import *
+from API.responses import *
 # from api.model.user import User
 # from api.model.order_request import OrderRequest, lis
 # from model.data import *
-from api.orders import Parcel
+from API.orders import Parcel
 
 
 app = Flask(__name__)
 
 # parcel = Parcel(1, 1, 'kal@yahoo.com', 'cassava', 46, 'Deb', 'kalungi', 'masaka', 'deb', 'luweero')
-parcel = Parcel(1, 1,'kal@yahoo.com')
+parcel = Parcel(1, 1,'kal@yahoo.com', 'pending')
 order_list = []
 
 @app.route('/')
@@ -23,6 +23,7 @@ def send_parcel():
   
     user_id = data.get('user_id')
     email = data.get('email')
+    status = data.get('status')
     # item_to_be_shipped = data.get('item_to_be_shipped', None)
     # weight = data.get('weight', None)
     # name_of_sender = data.get('name_of_sender', None)
@@ -35,6 +36,7 @@ def send_parcel():
     parcel = { 'order_id' : len(order_list)+1,
         'user_id' :user_id,
         'email':email,
+        'status':status
         # item_to_be_shipped :'item_to_be_shipped',
         # weight :'weight',
         # name_of_sender :'name_of_sender',
@@ -48,7 +50,10 @@ def send_parcel():
 
 @app.route('/api/v1/parcels', methods=['GET'])
 def get_parcel():
-    return jsonify(order_list)
+    if order_list:
+        return jsonify(order_list)
+    else:
+        return jsonify(empty_list)
 
 @app.route('/api/v1/parcels/<int:parcelId>', methods=['GET'])
 def api_get_sepecific_order(parcelId):
@@ -57,6 +62,8 @@ def api_get_sepecific_order(parcelId):
     for i in order_list:
         if i['order_id'] == parcelId:
             return jsonify({"message":i})
+        else:
+            return jsonify({"message":"the parcel is not available"})
 
 @app.route('/api/v1/users/<int:userId>/parcels', methods=['GET'])
 def api_get_all_orders_for_specific_user(userId):
