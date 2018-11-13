@@ -1,7 +1,6 @@
 # SendIt
 [![Build Status](https://www.travis-ci.org/nanfuka/SendIt.svg?branch=161834211-user-able-view-all-orders)](https://www.travis-ci.org/nanfuka/SendIt)
-[![Coverage Status](https://coveralls.io/repos/github/nanfuka/SendIt/badge.svg?branch=master)](https://coveralls.io/github/nanfuka/SendIt?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/nanfuka/SendIt/badge.svg)](https://coveralls.io/github/nanfuka/SendIt)
+[![Coverage Status](https://coveralls.io/repos/github/nanfuka/SendIt/badge.svg?branch=161834211-user-able-view-all-orders)](https://coveralls.io/github/nanfuka/SendIt?branch=161834211-user-able-view-all-orders)
 # description
 SendIT is a courier service that helps users deliver parcels to different destinations. SendIT provides courier quotes based on weight categories
 
