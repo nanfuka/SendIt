@@ -7,7 +7,7 @@ import json
 #     "password": "1was"
 # }
 
-test_parcel = {'user_id':'deb', 'email':'kalungi2k4@ds.com','status':'pending'
+parcels = {'user_id':'deb', 'email':'kalungi2k4@ds.com','status':'pending'
             }
 
 class Base(unittest.TestCase):
@@ -23,8 +23,9 @@ class Base(unittest.TestCase):
 
 class Endpoints(Base):
     def test_create_parcel_with_all_fields(self):
-        response = self.app_client.post("/api/v1/parcels", content_type='application/json', data=json.dumps(test_parcel))        # self.assertEqual(create_user.status_code, 201)
+        response = self.app_client.post("/api/v1/parcels", content_type='application/json', data=json.dumps(parcels))        # self.assertEqual(create_user.status_code, 201)
         self.assertEqual(response.status_code, 200)
+
 
 #     def test_create_parcel(self):
 #         create_user = self.app_client.post("/api/v1/users", content_type='application/json', data=json.dumps(test_user))
@@ -38,24 +39,68 @@ class Endpoints(Base):
 #         # self.assertEqual(create_user.status_code, 201)
 #         self.assertEqual(response.status_code, 201)
 
+    # def test_non_user_create_parcel(self):
+    #     parcel = {
+    #         "user_id":100,
+    #         "pickup_location" : "Kampala",
+    #         "destination": "Namugongo",
+    #         "items": [{"item_name": "Shoes", "item_weight": 40, "unit_delivery_price":2000}]
+    #     }
+    #     post_request = self.app_client.post("/api/v1/parcels", content_type='application/json', data=json.dumps(parcel))
+    #     self.assertEqual(response.status_code, 200)
+    #     response = json.loads(post_request.data.decode())
+    #     self.assertEqual(reponse["message"], "You dont have rights to create a parcel delivery order")
+class Set(Base):
 
-# class Set(Base):
-#     """
-#     Tests all aspects of setting attributes
-#     Tests include: setting attributes of wrong type, setting attributes outside their constraints, setting empty attributes.
-#     """
-#     def test_userid_int(self):
-#         create_user = self.app_client.post("/api/v1/users", content_type='application/json', data=json.dumps(test_user))
-#         parcel = {
-#             "user_id": "p",
-#             "pickup_location" : "Najja",
-#             "destination": "Namugongo",
-#             "items": [{"item_name": "Shoes", "item_weight": 40, "unit_delivery_price":2000}]
-#         }
-#         post_request = self.app_client.post("/api/v1/parcels", content_type='application/json', data=json.dumps(parcel))
-#         response = json.loads(post_request.data.decode())
-#         self.assertIn("Enter a valid user ID", response['message'])
-#         self.assertEqual(post_request.status_code, 400)
+    def test_create_parcel_without_user_id(self):
+        parcel = {
+            'email':'kalungi2k4@ds.com',
+            'status':'pending'
+            }
+        parcel_order = self.app_client.post("/api/v1/parcels", content_type='application/json', data=json.dumps(parcel))
+        post_request = self.app_client.post("/api/v1/parcels", content_type='application/json', data=json.dumps(parcel))
+        response = json.loads(post_request.data.decode())
+        self.assertIn("Enter your user_id please", response['message'])
+        self.assertEqual(post_request.status_code, 400)
+
+    def test_create_parcel_without_email(self):
+        parcel = {
+            
+            'user_id':2,
+            'status':'pending'
+            }
+        parcel_order = self.app_client.post("/api/v1/parcels", content_type='application/json', data=json.dumps(parcel))
+        post_request = self.app_client.post("/api/v1/parcels", content_type='application/json', data=json.dumps(parcel))
+        response = json.loads(post_request.data.decode())
+        self.assertIn("Enter your email please", response['message'])
+        self.assertEqual(post_request.status_code, 400)
+
+    def test_create_parcel_with_invalid_input(self):
+        parcel = {
+            'email': 'kalu@gmail.com',
+            'user_id':2,
+            'status':'pendi#ng'
+
+            }
+        parcel_order = self.app_client.post("/api/v1/parcels", content_type='application/json', data=json.dumps(parcel))
+        post_request = self.app_client.post("/api/v1/parcels", content_type='application/json', data=json.dumps(parcel))
+        response = json.loads(post_request.data.decode())
+        self.assertIn("status cannot have special characters", response['message'])
+        self.assertEqual(post_request.status_code, 400)
+
+    def test_create_parcel_with_invalid_email(self):
+        parcel = {
+            'email': 'kalugmail.com',
+            'user_id':2,
+            'status':'pendi#ng'
+
+            }
+        parcel_order = self.app_client.post("/api/v1/parcels", content_type='application/json', data=json.dumps(parcel))
+        post_request = self.app_client.post("/api/v1/parcels", content_type='application/json', data=json.dumps(parcel))
+        response = json.loads(post_request.data.decode())
+        self.assertIn("Invalid email", response['message'])
+        self.assertEqual(post_request.status_code, 400)
+
 
 #     def test_userid_required(self):
 #         create_user = self.app_client.post("/api/v1/users", content_type='application/json', data=json.dumps(test_user))
