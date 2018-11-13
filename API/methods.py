@@ -1,5 +1,7 @@
-from api.views import app
-
-"""Runs the app"""
-if __name__ == '__main__':
-    app.run(debug = True) 
+parcel = { 'order_id' : len(order_list)+1,
+        'user_id' :user_id,
+        'email':email,
+        'status':status
+def create(parcel):
+    order_list.append(parcel)
+    return jsonify({"parcel successfully created":parcel})

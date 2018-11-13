@@ -101,6 +101,18 @@ class Set(Base):
         self.assertIn("Invalid email", response['message'])
         self.assertEqual(post_request.status_code, 400)
 
+    def test_create_parcel_status_with_empty_space_as_input(self):
+        parcel = {
+            'email': 'kalug@mail.com',
+            'user_id':2,
+            'status':' '
+
+            }
+        parcel_order = self.app_client.post("/api/v1/parcels", content_type='application/json', data=json.dumps(parcel))
+        post_request = self.app_client.post("/api/v1/parcels", content_type='application/json', data=json.dumps(parcel))
+        response = json.loads(post_request.data.decode())
+        self.assertIn("Field cannot be blank", response['message'])
+        self.assertEqual(post_request.status_code, 400)
 
 #     def test_userid_required(self):
 #         create_user = self.app_client.post("/api/v1/users", content_type='application/json', data=json.dumps(test_user))
