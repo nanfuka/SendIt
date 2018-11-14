@@ -31,6 +31,8 @@ PUT /parcels/<parcelId> | Cancel the specific parcel delivery order
 ## Tests
 The Project has been tested on
 * TravisCI
+## gh-pages
+Go to [Super Fast Parsel Delivery Service ui](https://nanfuka.github.io/SendIt/UI/html/user_dash.html)
 
 ## Heroku 
 Go to [Super Fast Parsel Delivery Services](https://deborasendit.herokuapp.com/)

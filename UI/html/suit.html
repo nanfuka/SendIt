@@ -43,12 +43,13 @@
                 <br>
                 <span><label>email</label>: <label>kal@gmail.com</label></span>
                 <br>
-                <span><label>item to be shipped</label>: <label>passport</label></span>
+                <span><label>item to be shipped</label>: <label>leather suit</label></span>
                 <br>
-                <span><label>weight</label>: <label>6kg</label></span>
+                <span><label>weight</label>: <label>9kg</label></span>
                 <br>
-                <span><label>parcel-origin</label>: <label>Uganda</label><br>     
-          <span><label>destination</label>: <label id = "des">Indonesia</label></span>
+                <span><label>parcel-origin</label>: <label>Rwanda</label><br>
+
+          <span><label>destination</label>: <label id = "des">Japan</label></span>
                 <br>
     </fieldset>
     <div class="signup">
@@ -70,31 +71,7 @@
     </div>
 
     <div id="rec"></div>
-    <script>
-        function myFunction() {
-            var x;
-            var name = prompt("Please enter your new destination");
-            if (name != null) {
-                document.getElementById("des").innerHTML = name
-            }
-        }
-
-        function deletes() {
-            var txt;
-            if (confirm("DO YOU REALLY WANT TO DELETE THIS ORDER")) {
-                txt = "ORDER DELETED";
-
-            } else {
-                txt = "You pressed Cancel!";
-            }
-
-            function dis() {
-
-            }
-            document.getElementById("demo").innerHTML = txt;
-        }
-    </script>
-
+    
     <p id="demo"></p>
 
     <!-- the footer -->

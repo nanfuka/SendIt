@@ -137,7 +137,7 @@ input {
 
 .front {
     background-color: rgb(248, 245, 245);
-    margin-top: 15%;
+
     font-size: 200%;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: bisque
@@ -277,5 +277,11 @@ footer {
 }
 .fronts{
     background-color: #fff
+    
+}
+.order{
+    background-color: aliceblue;
+    font-family: sans-serif;
+    font-size: 100%;
     
 }
