@@ -235,6 +235,9 @@ td {
 .order-list fieldset {
     background-color: aliceblue;
 }
+input{
+    width: 80%;
+}
 
 .order-list button {
     margin-top: 2%;
@@ -268,4 +271,11 @@ footer {
 
 .contain {
     background-color: #999;
+}
+.container{
+    background-color: #999;
+}
+.fronts{
+    background-color: #fff
+    
 }
