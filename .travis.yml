@@ -7,7 +7,7 @@ install:
 
 # command to run tests
 scripts:
- - python3 -m pytest --cov=app tests/
+ - pytest
 
 after_success:
   - coveralls
