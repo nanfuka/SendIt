@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Sent it</title>
-<link rel="stylesheet" type="text/css" href="../css/general.css">
-<script src="myscripts.js"></script>
+    <title>Sent it</title>
+    <link rel="stylesheet" type="text/css" href="../css/general.css">
+    <script src="myscripts.js"></script>
 </head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <body>
 
     <!-- the header -->
@@ -13,7 +16,7 @@
         <!-- our main logo -->
         <a id="logo" href="index.html">
             <img src="../images/logo.jpg" alt="Logo">
-            <span>SENDIT COURIER SERVICES</span>
+            <span class="logo-title">SENDIT COURIER SERVICES</span>
         </a>
 
         <!-- main navigation links -->
@@ -28,14 +31,14 @@
     </header>
 
     <!-- the content -->
-</div>
-   
-<form action="#">
+    </div>
+
+    <form action="#">
         <div class="container">
-          <p>ADMIN DASHBOARD</p>
-          <p>WELCOME sendIt Adminstrator</p>
-          
-                <!-- <label for="Username">username</label><br>
+            <p>ADMIN DASHBOARD</p>
+            <p>WELCOME sendIt Adminstrator</p>
+
+            <!-- <label for="Username">username</label><br>
                 <input type="text" placeholder="Kalungi" name="Username"/><br>     
                 <label for="Email">Email Address</label><br>
                 <input type="email" placeholder="madz@gmail.com" name="Email"/><br>          
@@ -57,78 +60,75 @@
                 <input type="state/province" placeholder="kamulali" name="state/province" required/><br>
                 <input type="postal/zipcode" placeholder="256" name="postal/zipcode" required/><br>
                  -->
-          
-                    <table style="width:100%">
-                            <tr>
-                              <th>DATE</th>
-                              <th>username</th> 
-                              <th>email</th>
-                              <th>item to be shipped</th>
-                              <th>weight</th>
-                              <th>item-current-location</th>
-                              <th>destination</th> 
-                              <th>status</th>
-                              
-                            </tr>
-                            <tr>
-                              <td>input</td>
-                              <td>dero</td>
-                              <td>kals@gmail.com</td>
-                              <td>passport</td> 
-                              <td>0.02kg</td>
-                              <td>Malaba</td>
-                              <td>passport</td> 
-                              <td>0.02kg</td>
-                            </tr>
-                          </table>
-        <p id = "free">deborah</p>
-        <input id = "name" placeholder="enter name" onchange="myFunction()"
-        <ul>
+
+            <table style="width:100%">
+                <tr>
+                    <th>DATE</th>
+                    <th>username</th>
+                    <th>email</th>
+                    <th>item to be shipped</th>
+                    <th>weight</th>
+                    <th>item-current-location</th>
+                    <th>destination</th>
+                    <th>status</th>
+
+                </tr>
+                <tr>
+                    <td>input</td>
+                    <td>dero</td>
+                    <td>kals@gmail.com</td>
+                    <td>passport</td>
+                    <td>0.02kg</td>
+                    <td>Malaba</td>
+                    <td>passport</td>
+                    <td>0.02kg</td>
+                </tr>
+            </table>
+            <p id="free">deborah</p>
+            <input id="name" placeholder="enter name" onchange="myFunction()" <ul>
             <li>
-                <div id = "username"></div>
-                    <div id = "email"></div> </p></button>
+                <div id="username"></div>
+                <div id="email"></div>
+                </p>
+                </button>
 
             </li>
-        </ul> 
- 
-          <div class="signup">
-            <button type="button" class="edit-status">Edit status</button>
-            <button type="button" class="change-current-location">Change current location</button>
- 
-            <button type="submit" class="cancelbtn"><a href = "admin_dash.html">submit</a></button>  
-          </div>
+            </ul>
 
-          Name: <input type="text" id="myText" value="Mickey">
-          <button type="button" onclick="myFunction()">Try it</button>
+            <div class="signup">
+                <button type="button" class="edit-status">Edit status</button>
+                <button type="button" class="change-current-location">Change current location</button>
 
-          <p id="demo"></p>
-          <script>
+                <button type="submit" class="cancelbtn"><a href="admin_dash.html">submit</a></button>
+            </div>
+
+            Name:
+            <input type="text" id="myText" value="Mickey">
+            <button type="button" onclick="myFunction()">Try it</button>
+
+            <p id="demo"></p>
+            <script>
                 function myFunction() {
                     var x = document.getElementById("myText");
-                        document.getElementById("demo").innerHTML =  x.value;
+                    document.getElementById("demo").innerHTML = x.value;
 
                 }
-                </script>
-                
-                
-          
+            </script>
+
         </div>
-      </form>
-    </div>   
-
-
+    </form>
+    </div>
 
     <!-- the footer -->
     <footer>
         <img src="../images/delivery.png" alt="Footer Logo">
         <span>tel: 014632456<br>Copyright &copy; 2016-3010 </span>
     </footer>
-<script>
-// document.getElementById("username").innerHTML = "Hello JavaScript!";
+    <script>
+        // document.getElementById("username").innerHTML = "Hello JavaScript!";
+    </script>
 
-
-</script>
-
-</script>
+    </script>
 </body>
+
 </html>

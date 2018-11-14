@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Sent it</title>
-<link rel="stylesheet" type="text/css" href="../css/general.css">
-<script src="../js/myscripts.js"></script>
+    <title>Sent it</title>
+    <link rel="stylesheet" type="text/css" href="../css/general.css">
+    <script src="../js/myscripts.js"></script>
 </head>
+
 <body>
 
     <!-- the header -->
@@ -13,7 +15,7 @@
         <!-- our main logo -->
         <a id="logo" href="index.html">
             <img src="../images/logo.jpg" alt="Logo">
-            <span class = "logo-title">SENDIT COURIER SERVICES</span>
+            <span class="logo-title">SENDIT COURIER SERVICES</span>
         </a>
 
         <!-- main navigation links -->
@@ -28,69 +30,73 @@
     </header>
 
     <!-- the content -->
-</div>
-   
-<fieldset>
+    </div>
+
+    <fieldset>
         <div class="order">
-         
-          <p>Parcel order</p>
-          <div class="myorder">
-          <span><label>Date</label>: <label>12/09/2018</label></span><br>
-          <span><label>username</label>: <label>Deb</label></span><br>
-          <span><label>email</label>: <label>kal@gmail.com</label></span><br>
-          <span><label>item to be shipped</label>: <label>leather suit</label></span><br>
-          <span><label>weight</label>: <label>9kg</label></span><br>
-          <span><label>parcel-origin</label>: <label>Rwanda</label><br>
-         
-          <span><label>destination</label>: <label id = "des">Japan</label></span><br>
-        </fieldset> 
-          <div class="signup">
-                <button onclick="myFunction()" type="button" class="cancelbtn">change destination</button>
-                <button onclick="deletes()"type="submit" class="cancelbtn">cancel</button>           
-              </div>
-            </div>
-         
-  
-        <div id="div-content"></div>
 
-<div class="divbutton">
-    <button type="button" style="display: none;" id="i" onclick="document.body.removeChild(this.parentNode)">Hello</button>
-</div>
+            <p>Parcel order</p>
+            <div class="myorder">
+                <span><label>Date</label>: <label>12/09/2018</label></span>
+                <br>
+                <span><label>username</label>: <label>Deb</label></span>
+                <br>
+                <span><label>email</label>: <label>kal@gmail.com</label></span>
+                <br>
+                <span><label>item to be shipped</label>: <label>leather suit</label></span>
+                <br>
+                <span><label>weight</label>: <label>9kg</label></span>
+                <br>
+                <span><label>parcel-origin</label>: <label>Rwanda</label><br>
 
-<p id="dest"></p>
+          <span><label>destination</label>: <label id = "des">Japan</label></span>
+                <br>
+    </fieldset>
+    <div class="signup">
+        <button onclick="myFunction()" type="button" class="cancelbtn">change destination</button>
+        <button onclick="deletes()" type="submit" class="cancelbtn">cancel</button>
+    </div>
+    </div>
 
-        
+    <div id="div-content"></div>
 
-              </div>
-      
-    </div>   
+    <div class="divbutton">
+        <button type="button" style="display: none;" id="i" onclick="document.body.removeChild(this.parentNode)">Hello</button>
+    </div>
 
-<div id = "rec"></div>
-<script>
-    function myFunction(){
-    var x;
-    var name=prompt("Please enter your new destination");
-    if (name!=null){
-        document.getElementById("des").innerHTML =name
-   }
-}
+    <p id="dest"></p>
 
-function deletes(){
-    var txt;
-    if (confirm("DO YOU REALLY WANT TO DELETE THIS ORDER")) {
-        txt = "ORDER DELETED";
-       
-    } else {
-        txt = "You pressed Cancel!";
-    }
-    function dis(){
+    </div>
 
-    }
-    document.getElementById("demo").innerHTML = txt;
-} 
-</script>
+    </div>
 
-<p id = "demo"></p>
+    <div id="rec"></div>
+    <script>
+        function myFunction() {
+            var x;
+            var name = prompt("Please enter your new destination");
+            if (name != null) {
+                document.getElementById("des").innerHTML = name
+            }
+        }
+
+        function deletes() {
+            var txt;
+            if (confirm("DO YOU REALLY WANT TO DELETE THIS ORDER")) {
+                txt = "ORDER DELETED";
+
+            } else {
+                txt = "You pressed Cancel!";
+            }
+
+            function dis() {
+
+            }
+            document.getElementById("demo").innerHTML = txt;
+        }
+    </script>
+
+    <p id="demo"></p>
 
     <!-- the footer -->
     <footer>
@@ -99,4 +105,5 @@ function deletes(){
     </footer>
 
 </body>
+
 </html>
