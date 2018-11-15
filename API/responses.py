@@ -11,10 +11,10 @@ login_fail = {
         'success': False,
         'message': "Login Failed."
         }
-empty_list = {
-        'message':"There are no parsels at the moment"
+auth_fail = {
+        'success': False,
+        'message': "You are not authorised to access this page."
         }
-
 request_fail = {
         'success': False,
         'message': "Not a valid Request ID."
@@ -27,3 +27,5 @@ create_request_successful = {
         'success': True,
         'message': "Your request was submitted successfully.",
         }
+requests = [{'orderId': '2004', 'foodorder': 'bacBHHHon',
+            u'description': u'fresh', 'quantity': '3'}]
