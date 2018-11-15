@@ -20,7 +20,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: 100%;
-    backface-visibility: 
+    
 }
 
 
@@ -268,7 +268,7 @@ fieldset {
 }
 
 footer {
-    margin-top: 20%;
+    margin-top: 5%;
 }
 
 .contain {
