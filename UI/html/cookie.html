@@ -50,11 +50,15 @@
                 <span><label>parcel-origin</label>: <label>Uganda</label><br>
 
           <span><label>destination</label>: <label id = "des">Congo</label></span>
+          <span><label>status</label>: <label id = "status">Malawi</label></span>
+          <span><label>parcels' current location</label>: <label id = "current">Malaba</label></span>
                 <br>
     </fieldset>
     <div class="signup">
-        <button onclick="myFunction()" type="button" class="cancelbtn">change destination</button>
+        <button onclick="Destination()" type="button" class="cancelbtn">change destination</button>
         <button onclick="deletes()" type="submit" class="cancelbtn">cancel</button>
+        <button onclick="Location()" type="button" class="cancelbtn">current location</button>
+        <button onclick="Status()" type="button" class="cancelbtn">parcel status</button>
     </div>
     </div>
 
@@ -71,31 +75,7 @@
     </div>
 
     <div id="rec"></div>
-    <script>
-        function myFunction() {
-            var x;
-            var name = prompt("Please enter your new destination");
-            if (name != null) {
-                document.getElementById("des").innerHTML = name
-            }
-        }
-
-        function deletes() {
-            var txt;
-            if (confirm("DO YOU REALLY WANT TO DELETE THIS ORDER")) {
-                txt = "ORDER DELETED";
-
-            } else {
-                txt = "You pressed Cancel!";
-            }
-
-            function dis() {
-
-            }
-            document.getElementById("demo").innerHTML = txt;
-        }
-    </script>
-
+   
     <p id="demo"></p>
 
     <!-- the footer -->

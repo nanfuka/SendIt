@@ -1,4 +1,4 @@
-function myFunction() {
+function Destination() {
 
     var name = prompt("Please enter your new destination");
     if (name != null) {
@@ -33,11 +33,19 @@ document.getElementById("date").innerHTML = Date();
 
             }
 
-        function myFunction() {
+        function Location() {
             var x;
-            var name = prompt("Please enter your new destination");
+            var name = prompt("Please enter the parcel's current location");
             if (name != null) {
-                document.getElementById("des").innerHTML = name
+                document.getElementById("current").innerHTML = name
+            }
+        }
+
+        function Status() {
+            var x;
+            var name = prompt("Please enter the parcel's status");
+            if (name != null) {
+                document.getElementById("status").innerHTML = name
             }
         }
 
