@@ -289,7 +289,12 @@ fieldset {
     color: darkred;
     font-weight: bolder;
 }
-
+a{
+    font-family: cursive;
+    font-size: 120%;
+    color: darkred;
+    font-weight: bolder; 
+}
 footer {
     margin-top: 2%;
     height: 5%;
