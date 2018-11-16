@@ -40,7 +40,7 @@ class RequestTestCase(BaseTestCase):
             }
         post_request = self.test_client.post("/api/v1/parcels", content_type='application/json', data=json.dumps(parcel))
         response = json.loads(post_request.data.decode())
-        self.assertIn("status cannot have special characters", response['message'])
+        self.assertIn("Enter your item_to_be_shipped please", response['message'])
         self.assertEqual(post_request.status_code, 200)
 
     def test_create_parcel_with_invalid_email(self):
@@ -64,7 +64,7 @@ class RequestTestCase(BaseTestCase):
             }
         post_request = self.test_client.post("/api/v1/parcels", content_type='application/json', data=json.dumps(parcel))
         response = json.loads(post_request.data.decode())
-        self.assertIn("Field cannot be blank", response['message'])
+        self.assertIn("Enter your item_to_be_shipped please", response['message'])
         self.assertEqual(post_request.status_code, 200)
 
     def test_create_parcel_with_user_id_a_string(self):
@@ -77,6 +77,6 @@ class RequestTestCase(BaseTestCase):
             }
         post_request = self.test_client.post("/api/v1/parcels", content_type='application/json', data=json.dumps(parcel))
         response = json.loads(post_request.data.decode())
-        self.assertIn("The user_id should be an integer", response['message'])
+        self.assertIn("The input should be a number", response['message'])
         self.assertEqual(post_request.status_code, 200)
         
