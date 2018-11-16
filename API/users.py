@@ -1,6 +1,3 @@
-from passlib.apps import custom_app_context as pwd_context
-
-
 class User:
     def __init__(self, first_name, last_name, email,
                 username, password, is_admin=False):
@@ -8,7 +5,7 @@ class User:
         self.last_name = last_name
         self.email = email
         self.username = username
-        self.password = self.hash_password(password)
+        self.password = password
         self.is_admin = is_admin
 
     def get_first_name(self):
@@ -61,5 +58,3 @@ class User:
             'password': self.password
         }
 
-    def verify_password(self, password):
-        return pwd_context.verify(password, self.password)

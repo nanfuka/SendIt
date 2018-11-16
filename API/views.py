@@ -20,55 +20,55 @@ data_store = DataStore(temp_users)
 def api_documentation():
     return "WELCOME TO SEND_IT APP, THE SOLUTION TO ALL YOUR COUREER SERVICES"
 
-@app.route('/api/v1/register', methods=['POST'])
-def register_user():
-    """signup a new user with the application to that they
-     can be able to access its servises
-     """
-    data = request.args
-    first_name = data.get("first_name")
-    last_name = data.get("last_name")
-    email = data.get("email")
-    username = data.get("username")
-    password = data.get("password")
-    if first_name is not None and last_name is not None and \
-            email is not None and username is not None and \
-            password is not None:
-        user = data_store.search_list(username)
-        if user is None:
-            response = data_store.create_user(
-                User(
-                    first_name, last_name, email, username, password)).\
-                get_dictionary()
-            response["token"] = data_store.generate_auth_token(response)
-            registration_successful["user"] = response
-            return jsonify(registration_successful)
+# @app.route('/api/v1/register', methods=['POST'])
+# def register_user():
+#     """signup a new user with the application to that they
+#      can be able to access its servises
+#      """
+#     data = request.args
+#     first_name = data.get("first_name")
+#     last_name = data.get("last_name")
+#     email = data.get("email")
+#     username = data.get("username")
+#     password = data.get("password")
+#     if first_name is not None and last_name is not None and \
+#             email is not None and username is not None and \
+#             password is not None:
+#         user = data_store.search_list(username)
+#         if user is None:
+#             response = data_store.create_user(
+#                 User(
+#                     first_name, last_name, email, username, password)).\
+#                 get_dictionary()
+#             response["token"] = data_store.generate_auth_token(response)
+#             registration_successful["user"] = response
+#             return jsonify(registration_successful)
 
-        else:
-            return jsonify(login_fail), 401
-    else:
-        return jsonify(create_request_fail)
+#         else:
+#             return jsonify(login_fail), 401
+#     else:
+#         return jsonify(create_request_fail)
 
-@app.route('/api/v1/login', methods=['POST'])
-def login():
-    """login"""
+# @app.route('/api/v1/login', methods=['POST'])
+# def login():
+#     """login"""
 
-    data = request.get_json(force=True)
-    username = data.get('username', None)
-    password = data.get('password', None)
+#     data = request.get_json(force=True)
+#     username = data.get('username', None)
+#     password = data.get('password', None)
 
-    user = data_store.search_list(username)
-    if user is not None:
-        if user.verify_password(password):
-            response = user.get_dictionary()
-            response["token"] = data_store.generate_auth_token(response)
-            response["success"] = True
-            print(str(response))
-            return jsonify(response)
-        else:
-            return jsonify(login_fail), 200
-    else:
-        return jsonify(login_fail), 200
+#     user = data_store.search_list(username)
+#     if user is not None:
+#         if user.verify_password(password):
+#             response = user.get_dictionary()
+#             response["token"] = data_store.generate_auth_token(response)
+#             response["success"] = True
+#             print(str(response))
+#             return jsonify(response)
+#         else:
+#             return jsonify(login_fail), 200
+#     else:
+#         return jsonify(login_fail), 200
 
 
 
@@ -163,8 +163,8 @@ def send_parcel():
     return jsonify({"parcel_order was successfully created":parcel}), 201
 
 @app.route('/api/v1/parcels', methods=['GET'])
-@data_store.token_required
-def get_parcel(current_user):
+# @data_store.token_required
+def get_parcel():
     if order_list:
         """using this route a user be able to view all of his parcel order history"""
         return jsonify({"Parcels":order_list}), 200
@@ -172,28 +172,36 @@ def get_parcel(current_user):
         return jsonify({"message":"No parcels available at the moment"}), 200
 
 @app.route('/api/v1/parcels/<int:parcelId>', methods=['GET'])
-@data_store.token_required
-def api_get_sepecific_order(current_user,parcelId):
+# @data_store.token_required
+def api_get_sepecific_order(parcelId):
 
     """this function fetches all the percel order details about a specific user
     """
-    for order in order_list:
-        if order['order_id'] == parcelId:
-            return jsonify({"message":order})
-        
-        else:
-              
-            return jsonify({"message":"the parcel is not available"})
+    order = [order for order in order_list if order['order_id']==parcelId]
+    if order:
+        return jsonify({"order":order[0]})
+    else:
+        return jsonify({'message': "the parcel_id is not available"})
+
+
 
 @app.route('/api/v1/users/<int:userId>/parcels', methods=['GET'])
-@data_store.token_required
-def api_get_all_orders_for_specific_user(current_user,userId):
+
+def api_get_all_orders_for_specific_user(userId):
     """an admin can vew all orders of a specific user"""
-    for parcel in order_list:
-        if parcel['user_id'] == userId:
-            return jsonify(parcel)
-        else:
-            return jsonify({"message": "parcel with that parcel-Id is not available"}),200
+    # for order in order_list:
+    #     if order['user_id'] == userId:
+         
+    #         return jsonify(order)
+        
+    #     else:
+              
+    #         return jsonify({"message":"the user is not available"})
+    order = [order for order in order_list if order['user_id']==userId]
+    if order:
+        return jsonify({"order":order[0]})
+    else:
+        return jsonify({'message': "the user_id is not available"})
 
 @app.route('/api/v1/parcels/<int:parcelId>/cancel', methods=['PUT'])
 # @data_store.token_required
@@ -202,14 +210,9 @@ def Cancel_specific_parcel_delivery_order(parcelId):
      its status. however this can only be done if the current status is "in transit"
        
     """
-    data = request.get_json(force=True)  
-    for order in order_list:
-        if order["status"] == "pending" and order['order_id'] == data['order_id']:
-            order["status"] = data['status']
-            
-            return jsonify({"success": order})
-        else:
-            return jsonify({"message":"The order_id is invalid"})
-           
-    else:
-         return jsonify({"message": "failed"})
+    data = request.get_json(['status'])  
+    specific_order=[order for order in order_list if order['order_id']==parcelId]
+    specific_order[0]['status'] = data 
+    if data:   
+        return jsonify({"success": specific_order})
+    return jsonify({"message":"The order_id is invalid"})
