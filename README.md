@@ -35,7 +35,7 @@ The Project has been tested on
 * TravisCI
 
 ## Heroku 
-Go to [Super Fast Parsel Delivery Services](https://deborasendit.herokuapp.com/)
+Go to [Super Fast Parsel Delivery Services](https://sendsit.herokuapp.com/)
 
 ## Instalation
 
