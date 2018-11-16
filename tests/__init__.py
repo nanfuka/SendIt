@@ -19,10 +19,26 @@ class BaseTestCase(unittest.TestCase):
         #     "price":200           
         # }
         self.order = {
-            "email": "kk@email.com ", 
-            "order_id": 1, 
-            "status": "pen", 
-            "user_id": 4         
+        "destination": "europ",
+        "email": "fd@yaho.com",
+        "item_origin": "nsambya",
+        "item_to_be_shipped": "muucdhx",
+        "name_of_reciever": "Dorah",
+       "order_id":1,
+        "status": "pending",
+        "user_id": 1,
+        "weight": 1        
+        }
+        parcel ={
+        "destination": "europ",
+        "email": "fd@yaho.com",
+        "item_origin": "nsambya",
+        "item_to_be_shipped": "muucdhx",
+        "name_of_reciever": "Dorah",
+       "order_id":1,
+        "status": "pending",
+        "user_id": 1,
+        "weight": 1
         }
 
         # self.user_login_data={
