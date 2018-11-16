@@ -5,39 +5,26 @@ from API.users import User
 from API.data import DataStore
 from API.responses import *
 
+
 app = Flask(__name__)
-# parcel = Parcel(1, 1, 'kal@yahoo.com', 'pending', 'cassava', 46, 'Deb', 'kalungi', 'masaka', 'luweero')
-parcel = Parcel(1, 1, 'kal@yahoo.com')
+
+parcel = Parcel(1, 1, 'kal@yahoo.com', 'pending', 'cassava', 46, 'Deb', 'kalungi', 'masaka', 'luweero')
+# parcel = Parcel(1, 1, 'kal@yahoo.com')
 order_list = []
 temp_users = [User("Nsubuga", "Kalungiowak",
                    "llkldf@gmail.com", "Deb", "boosiko", True)]
 data_store = DataStore(temp_users)
-@app.route('/api/v1/login', methods=['POST'])
-def login():
-    """Auser can login to the app using this route. after logging 
-    in, a user will get a token which he will use to access other private routes
-    """
-    data = request.get_json(force=True)
-    username = data.get('username', None)
-    password = data.get('password', None)
 
-    user = data_store.search_list(username)
-    if user is not None:
-        if user.verify_password(password):
-            response = user.get_dictionary()
-            response["token"] = data_store.generate_auth_token(response)
-            response["success"] = True
-            print(str(response))
-            return jsonify(response)
-        else:
-            return jsonify({"message:" "wrong input values"}), 200
-    else:
-        return jsonify({"message:" "please register with the app first"}), 200
 
+@app.route('/')
+def api_documentation():
+    return "WELCOME TO SEND_IT APP, THE SOLUTION TO ALL YOUR COUREER SERVICES"
 
 @app.route('/api/v1/register', methods=['POST'])
 def register_user():
-    """signup a new user"""
+    """signup a new user with the application to that they
+     can be able to access its servises
+     """
     data = request.args
     first_name = data.get("first_name")
     last_name = data.get("last_name")
@@ -62,113 +49,122 @@ def register_user():
     else:
         return jsonify(create_request_fail)
 
+@app.route('/api/v1/login', methods=['POST'])
+def login():
+    """login"""
+
+    data = request.get_json(force=True)
+    username = data.get('username', None)
+    password = data.get('password', None)
+
+    user = data_store.search_list(username)
+    if user is not None:
+        if user.verify_password(password):
+            response = user.get_dictionary()
+            response["token"] = data_store.generate_auth_token(response)
+            response["success"] = True
+            print(str(response))
+            return jsonify(response)
+        else:
+            return jsonify(login_fail), 200
+    else:
+        return jsonify(login_fail), 200
 
 
-
-
-@app.route('/')
-def index():
-    """api for the index route"""
-    return 'welcome to getIt Application. For all you Deliveries'
 
 @app.route('/api/v1/parcels', methods=['POST'])
 # @data_store.token_required
 def send_parcel():
     """A user can create a parsel delivery order by filling all the required fileds"""
     
-    
+    specialCharacters = ['$','#','@','!','*']
     data = request.get_json(force=True)
   
     user_id = data.get('user_id')
     email = data.get('email')
-    # status = data.get('status')
-    # item_to_be_shipped = data.get('item_to_be_shipped')
-    # weight = data.get('weight')
-    # name_of_sender = data.get('name_of_sender')
-    # name_of_reciever = data.get('name_of_reciever')
-    # destination = data.get('destination')
-    # item_origin = data.get('item_origin')
+    status = data.get('status')
+    item_to_be_shipped = data.get('item_to_be_shipped')
+    weight = data.get('weight')
+    name_of_reciever = data.get('name_of_reciever')
+    destination = data.get('destination')
+    item_origin = data.get('item_origin')
 
     
     parcel = { 'order_id' : len(order_list)+1,
         'user_id' :user_id,
         'email':email,
-        # 'status':status,
-        # 'item_to_be_shipped' :item_to_be_shipped,
-        # 'weight' :weight,
-        # 'name_of_sender' :name_of_sender,
-        # 'name_of_reciever' :name_of_reciever,
-        # 'item_origin':item_origin
+        'status':status,
+        'item_to_be_shipped' :item_to_be_shipped,
+        'weight' :weight,
+#        
+        'name_of_reciever' :name_of_reciever,
+        'item_origin':item_origin,
+        'destination': destination
+        
     }
     if user_id is None:
         return jsonify({"message":"Enter your user_id please"}), 200
-    if type(user_id) == str:
+    elif isinstance(user_id, str):
         return jsonify({"message": "The input should be a number"}),200
-    if email is None:
+    elif email is None:
         return jsonify({"message":"Enter your email please"}),200
-    if not re.match('[^@]+@[^@]+\.[^@]+', data['email']):
+    elif not re.match('[^@]+@[^@]+\.[^@]+', data['email']):
         return jsonify({"message": "Invalid email"}), 200
-    # if name_of_sender is None:
-    #     return jsonify({"message":"Enter the parcel name_of_sender please"}), 200    
-    # if item_to_be_shipped is None:
-    #     return jsonify({"message":"Enter your item_to_be_shipped please"}), 200    
-    # if weight is None:
-    #     return jsonify({"message":"Enter the parcel weight please"}), 200
-    # if type(weight) == str:
-    #     return jsonify({"message": "The input should be a number"}),200
-    # if item_origin is None:
-    #     return jsonify({"message":"Enter your item_origin please"}), 200    
-    # if destination is None:
-    #     return jsonify({"message":"Enter your destination please"}), 200
+   
+    elif item_to_be_shipped is None:
+        return jsonify({"message":"Enter your item_to_be_shipped please"}), 200 
 
-    # if name_of_reciever is None:
-    #     return jsonify({"message":"Enter your name_of_reciever please"}), 200
+    elif isinstance(item_to_be_shipped, int):
+        return jsonify({"message": "The input should be string"}),200   
+    elif weight is None:
+        return jsonify({"message":"Enter the parcel weight please"}), 200
+    elif isinstance(weight, str):
+        return jsonify({"message": "The input should be a number"}),200
+    elif item_origin is None:
+        return jsonify({"message":"Enter your item_origin please"}), 200   
+    elif isinstance(weight, str):
+        return jsonify({"message": "The input should be a number"}),200 
+    elif destination is None:
+        return jsonify({"message":"Enter your destination please"}), 200
+    elif isinstance(destination, int):
+        return jsonify({"message": "The input should be a string"}),200
 
-    # # if type(item_to_be_shipped) == int:
-    # #     return jsonify({"message": "The item_to_be_shipped not be should be a be word"}),200
+    elif name_of_reciever is None:
+        return jsonify({"message":"Enter your name_of_reciever please"}), 200
+    elif isinstance(name_of_reciever, int):
+        return jsonify({"message": "The input should be a string"}),200
 
-    # specialCharacters = ['$','#','@','!','*']
 
-    # if any(char in specialCharacters for char in (data['status'])):
-    #     return jsonify({"message": "Enter a valid status"}), 200
+    elif any(char in specialCharacters for char in (data['name_of_reciever'])):
+        return jsonify({"message": "Enter a valid name of reciever"}), 200
 
-    # if any(char in specialCharacters for char in (data['name_of_sender'])):
-    #     return jsonify({"message": "Enter a valid name of sender"}), 200
+    elif any(char in specialCharacters for char in (data['destination'])):
+        return jsonify({"message": "Enter a valid destination"}), 200
 
-    # if any(char in specialCharacters for char in (data['name_of_reciever'])):
-    #     return jsonify({"message": "Enter a valid name of reciever"}), 200
-
-    # if any(char in specialCharacters for char in (data['destination'])):
-    #     return jsonify({"message": "Enter a valid destination"}), 200
-
-    # if any(char in specialCharacters for char in (data['item_to_be_shipped'])):
-    #     return jsonify({"message": "Enter a valid item_to_be_shipped"}), 200
+    elif any(char in specialCharacters for char in (data['item_to_be_shipped'])):
+        return jsonify({"message": "Enter a valid item_to_be_shipped"}), 200
  
 
-    # if data['item_to_be_shipped'].isspace() or (' ' in data['item_to_be_shipped']):
-    #     return jsonify({"message": "item to be shipped cannot be blank"}), 200
+    elif data['item_to_be_shipped'].isspace() or (' ' in data['item_to_be_shipped']):
+        return jsonify({"message": "item to be shipped cannot be blank"}), 200
 
-    # if data['name_of_sender'].isspace() or (' ' in data['name_of_sender']):
-    #     return jsonify({"message": "name of sender cannot be blank"}), 200
 
-    # if data['name_of_reciever'].isspace() or (' ' in data['name_of_reciever']):
-    #     return jsonify({"message": "name of reciever cannot be blank"}),200 
+    elif data['name_of_reciever'].isspace() or (' ' in data['name_of_reciever']):
+        return jsonify({"message": "name of reciever cannot be blank"}),200 
         
-    # if data['destination'].isspace() or (' ' in data['destination']):
-    #     return jsonify({"message": "destination cannot be blank"}), 200
+    elif data['destination'].isspace() or (' ' in data['destination']):
+        return jsonify({"message": "destination cannot be blank"}), 200
 
-    # if data['item_origin'].isspace() or (' ' in data['item_origin']):
-    #     return jsonify({"message": "item origin cannot be blank"}), 200
-
-    # if data['status'].isspace() or (' ' in data['status']):
-    #     return jsonify({"message": "Field cannot be blank"}), 200
-   
-        order_list.append(parcel)
+    elif data['item_origin'].isspace() or (' ' in data['item_origin']):
+        return jsonify({"message": "item origin cannot be blank"}), 200
+  
+    order_list.append(parcel)
 
     return jsonify({"parcel_order was successfully created":parcel}), 201
 
 @app.route('/api/v1/parcels', methods=['GET'])
-def get_parcel():
+@data_store.token_required
+def get_parcel(current_user):
     if order_list:
         """using this route a user be able to view all of his parcel order history"""
         return jsonify({"Parcels":order_list}), 200
@@ -176,17 +172,22 @@ def get_parcel():
         return jsonify({"message":"No parcels available at the moment"}), 200
 
 @app.route('/api/v1/parcels/<int:parcelId>', methods=['GET'])
-def api_get_sepecific_order(parcelId):
+@data_store.token_required
+def api_get_sepecific_order(current_user,parcelId):
+
     """this function fetches all the percel order details about a specific user
     """
-    for i in order_list:
-        if i['order_id'] == parcelId:
-            return jsonify({"message":i})
+    for order in order_list:
+        if order['order_id'] == parcelId:
+            return jsonify({"message":order})
+        
         else:
+              
             return jsonify({"message":"the parcel is not available"})
 
 @app.route('/api/v1/users/<int:userId>/parcels', methods=['GET'])
-def api_get_all_orders_for_specific_user(userId):
+@data_store.token_required
+def api_get_all_orders_for_specific_user(current_user,userId):
     """an admin can vew all orders of a specific user"""
     for parcel in order_list:
         if parcel['user_id'] == userId:
@@ -195,16 +196,20 @@ def api_get_all_orders_for_specific_user(userId):
             return jsonify({"message": "parcel with that parcel-Id is not available"}),200
 
 @app.route('/api/v1/parcels/<int:parcelId>/cancel', methods=['PUT'])
+# @data_store.token_required
 def Cancel_specific_parcel_delivery_order(parcelId):
     """Using the put method, a user can retrieve and order and modify
      its status. however this can only be done if the current status is "in transit"
+       
     """
-    for parcel in order_list:
-            parcel_dict = parcel.to_dict()
-            if parcel_dict['parcel_id'] == parcelId: 
-                if parcel_dict['status'] == 'pending':
-                    parcel_dict["status"] = "cancelled"
-                    return jsonify({"Parcel_delivery_order_cancelled":parcel_dict}), 200
-                
-                return jsonify({'message':'you only cancel a persel in transit'}), 200
-
+    data = request.get_json(force=True)  
+    for order in order_list:
+        if order["status"] == "pending" and order['order_id'] == data['order_id']:
+            order["status"] = data['status']
+            
+            return jsonify({"success": order})
+        else:
+            return jsonify({"message":"The order_id is invalid"})
+           
+    else:
+         return jsonify({"message": "failed"})
