@@ -5,19 +5,7 @@ class BaseTestCase(unittest.TestCase):
 
     def setUp(self):
         self.test_client = app.test_client()
-        # self.user_data = {
-        #     "user_id": 1,
-        #     "name": "debbie",
-        #     "email":"kalungi2k6@gmail.com",
-        #     "username":"grace",
-        #     "password":"myprecious"
-           
-        # }
-        # self.menu = {
-        #     "menu_id": 1,
-        #     "menu_name": "chips",
-        #     "price":200           
-        # }
+
         self.order = {
         "destination": "europ",
         "email": "fd@yaho.com",
