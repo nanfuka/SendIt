@@ -43,6 +43,15 @@ class Database:
         self.cursor.execute(create_table_parsels)
         self.connection.commit()
 
+    # def drop_tables(self):
+    #     """
+    #     method drops tables
+    #     """
+    #     create_table_users = "DROP TABLE users cascade"
+    #     create_table_parsels = "DROP TABLE parcels cascade"
+    #     self.cursor.execute(drop_user_table)
+    #     self.cursor.execute(drop_parcel_table)
+
 database = Database()
 database.create_table_users()
 database.create_table_parsels()
