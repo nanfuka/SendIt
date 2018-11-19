@@ -130,4 +130,97 @@ class Userdata:
         self.database.cursor.execute(query.format(password))
         row = self.database.cursor.fetchone()
         return row
- 
+
+    def create_parcel(self):
+
+        """this function creates a parcel delivery order"""        
+        user_data = request.get_json()
+        user_id = user_data.get('user_id')
+        name_of_reciever = user_data.get('name_of_reciever')
+        source = user_data.get('source')
+        destination = user_data.get('destination')
+        status = user_data.get('status')
+   
+        if not user_data:
+            return jsonify({'message': 'All fields are required'}), 400
+
+        if not user_id or user_id == " " or user_id == type(str):
+            return jsonify({'message': 'Invalid user_id'}), 400
+        if not name_of_reciever or name_of_reciever == " " or name_of_reciever == type(int):
+            return jsonify({'message': 'Invalid name_of_reciever'}), 400
+
+        if not source or source == " " or source == type(int):
+            return jsonify({'message': 'Invalid source'}), 400
+
+        if not destination or destination == " " or destination == type(int):
+            return jsonify({'message': 'invalid destination'}), 400
+
+        if not status or status == " " or status == type(int):
+            return jsonify({'message': 'invalid status'}), 400
+                
+
+        query = """
+            INSERT INTO parcels(user_id, name_of_reciever, source, destination, status)
+            VALUES('{}','{}','{}','{}','{}')
+        """
+        self.database.cursor.execute(query.format(user_data['user_id'], user_data['name_of_reciever'], user_data['source'], user_data['destination'], user_data['status']))
+        return jsonify({"message":"order successfully created"})
+
+    def modify_destination(self, parcelId):
+        """this function allows for teh user to change teh destination of teh parcel. however this can only happen if teh parcel is in transit"""
+        user_data = request.get_json()
+        user_id = user_data.get('user_id')
+        name_of_reciever = user_data.get('name_of_reciever')
+        source = user_data.get('source')
+        destination = user_data.get('destination')
+        status = user_data.get('status')
+   
+        if not user_data:
+            return jsonify({'message': 'All fields are required'}), 400
+
+        if not user_id or user_id == " " or user_id == type(str):
+            return jsonify({'message': 'Invalid user_id'}), 400
+        if not name_of_reciever or name_of_reciever == " " or name_of_reciever == type(int):
+            return jsonify({'message': 'Invalid name_of_reciever'}), 400
+
+        if not source or source == " " or source == type(int):
+            return jsonify({'message': 'Invalid source'}), 400
+
+        if not destination or destination == " " or destination == type(int):
+            return jsonify({'message': 'invalid destination'}), 400
+
+        if not status or status == " " or status == type(int):
+            return jsonify({'message': 'invalid status'}), 400
+                
+
+        query = "UPDATE parcels SET destination = '{}' WHERE parcel_id = '{}'"
+        self.database.cursor.execute(query.format(destination, parcelId))
+        return jsonify({'message': 'Order status has been updated'}), 200
+
+    def get_all_parcels(self):
+        """retrieves all orders [GET] method"""
+        query = "SELECT * FROM parcels"
+        self.database.cursor.execute(query)
+        parcel = self.database.cursor.fetchall()
+        results = []
+        if row:
+            for parcel in parcels:
+                results.append({
+                    'parcel_id':parcel[0],
+                    'user_id':parcel[1],
+                    'name_of_reciever':parcel[2],
+                    'source':parcel[3],
+                    'destination':parcel[4],
+                    'status':parcel[5]
+                    })
+            return jsonify(results)
+        else:
+            item = None
+            return jsonify({'message': 'No orders found'}), 404
+
+ parcel_id SERIAL PRIMARY KEY,
+            user_id INTEGER NOT NULL,
+            name_of_reciever VARCHAR(100) NOT NULL,
+            source VARCHAR(100) NOT NULL,
+            destination VARCHAR(100) NOT NULL,
+            status VARCHAR DEFAULT 

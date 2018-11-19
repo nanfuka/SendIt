@@ -1,18 +1,23 @@
 import psycopg2
+import os
 
 
-
+    
 class Database:
+        
     def __init__(self):
+        if os.getenv("DB_CONN") =="testdb":
+            db_name = "testdb"
+        else:   db_name = "sendit"
         try:
-            postgresdb = 'sendit'
+            # postgresdb = 'sendit'
             Host="localhost"
             User="postgres"
             Password="test"
 
             
             self.connection = psycopg2.connect(
-                    database=postgresdb, host=Host, user=User,
+                    database=db_name, host=Host, user=User,
                     password=Password, port="5432"
                 )
             self.connection.autocommit = True

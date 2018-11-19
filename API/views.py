@@ -54,3 +54,17 @@ def register_user():
 def login_user():
     """Auser can login into the app by entering their username and matching password which they used at registration"""
     return userdata.login_user()
+
+@app.route('/api/v1/parcels/<parcelId>/destination', methods=['PUT'])
+def change_destination(parcelId):
+    """This function enables the user to change the percel destination"""
+    return userdata.modify_destination(parcelId)
+
+@app.route('/api/v1/parcels', methods=['POST'])
+def create_persel():
+    return userdata.create_parcel()
+
+@app.route('/api/v1/parcels', methods=['GET'])
+def get_parcel():
+    return userdata.get_all_parcels()
+
