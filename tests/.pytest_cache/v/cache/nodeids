@@ -1,0 +1,9 @@
+[
+  "test_app.py::AppTestCase::test_index",
+  "test_send_parcel.py::Endpoints::test_create_parcel_with_all_fields",
+  "test_send_parcel.py::Set::test_create_parcel_status_with_empty_space_as_input",
+  "test_send_parcel.py::Set::test_create_parcel_with_invalid_email",
+  "test_send_parcel.py::Set::test_create_parcel_with_invalid_input",
+  "test_send_parcel.py::Set::test_create_parcel_without_email",
+  "test_send_parcel.py::Set::test_create_parcel_without_user_id"
+]
