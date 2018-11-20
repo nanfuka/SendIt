@@ -30,7 +30,7 @@ class Database:
             user_id SERIAL PRIMARY KEY,
             username VARCHAR(100),
             email VARCHAR(100),
-            password VARCHAR(100))"""
+            password VARCHAR(100)"""
         self.cursor.execute(create_table_users)
         self.connection.commit()
 
@@ -42,6 +42,7 @@ class Database:
             source VARCHAR(100) NOT NULL,
             destination VARCHAR(100) NOT NULL,
             status VARCHAR DEFAULT 'in_transit',
+            present_location VARCHAR(100) NOT NULL,
             FOREIGN KEY (user_id)
                 REFERENCES users(user_id)
         )"""

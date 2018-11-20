@@ -10,6 +10,8 @@ from functools import wraps
 app = Flask(__name__)
 app.config['USER_KEY'] = 'mylovelykids'
 app.config['ADMIN_KEY'] = 'administratorsareannoying'
+app.config['ADMIN'] = 'admin'
+app.config['ADMIN-PASSWORD'] = 'adminpassword'
 
 userdata = Userdata()
 
@@ -45,12 +47,12 @@ def admin_token(f):
 def api_documentation():
     return "WELCOME TO SEND_IT APPLICATION"
 
-@app.route('/api/v1/register', methods=['POST'])
+@app.route('/api/v1/auth/signup', methods=['POST'])
 def register_user():
     """signup a new user"""
     return userdata.create_user()
 
-@app.route('/api/v1/login', methods=['POST'])
+@app.route('/api/v1/auth/login', methods=['POST'])
 def login_user():
     """Auser can login into the app by entering their username and matching password which they used at registration"""
     return userdata.login_user()
@@ -68,3 +70,10 @@ def create_persel():
 def get_parcel():
     return userdata.get_all_parcels()
 
+@app.route('/api/v1/<parcelId>/status', methods=['PUT'])
+def change_parsel_status(parcelId):
+    return userdata.change_status(parcelId)
+
+@app.route('/api/v1/<parcelId>presentlocation', methods=['PUT'])
+def change_present_location(parcelId):
+    return userdata.change_present_parsel_location(parcelId)

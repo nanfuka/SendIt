@@ -8,7 +8,6 @@ from flask import request
 from database_conn import Database
 import re
 
-
 class Userdata:
     def __init__(self):
         self.database = Database()
@@ -61,7 +60,7 @@ class Userdata:
         self.database.cursor.execute(query.format(user_data['username'],
             user_data['email'], user_data['password']))
 
-        return jsonify({"message": "user successfully added"}), 200
+        return jsonify({"message": "user successfully added"}), 201
 
     def find_user_by_username(self, username):
         query = "SELECT * FROM  users WHERE username = '{}'"
@@ -102,7 +101,7 @@ class Userdata:
                     'token': token.decode('utf-8'), 'user':user_data}, 200
             return jsonify({"message":response})
         
-        elif user_data['username'] == 'admin' and user_data['password'] == 'admin':
+        elif user_data['username'] == ADNIN-NAME and user_data['password'] == ADMIN-PASSWORD:
             token = jwt.encode({
                 'username': user_data['username'],
                 'exp':
@@ -195,16 +194,45 @@ class Userdata:
 
         query = "UPDATE parcels SET destination = '{}' WHERE parcel_id = '{}'"
         self.database.cursor.execute(query.format(destination, parcelId))
-        return jsonify({'message': 'Order status has been updated'}), 200
+        return jsonify({'message': 'parcel destination has been updated'}), 200
+
+    def change_status(self, parcelId):
+        """this function allows for teh user to change teh destination of teh parcel. however this can only happen if teh parcel is in transit"""
+        user_data = request.get_json()
+        user_id = user_data.get('user_id')
+        name_of_reciever = user_data.get('name_of_reciever')
+        source = user_data.get('source')
+        destination = user_data.get('destination')
+        status = user_data.get('status')
+                
+
+        query = "UPDATE parcels SET status = '{}' WHERE parcel_id = '{}'"
+        self.database.cursor.execute(query.format(status, parcelId))
+        return jsonify({'message': 'parsel status has been updated'}), 200
+
+    def change_present_parsel_location(self, parcelId):
+        """this function allows for teh user to change teh destination of teh parcel. however this can only happen if teh parcel is in transit"""
+        user_data = request.get_json()
+        user_id = user_data.get('user_id')
+        name_of_reciever = user_data.get('name_of_reciever')
+        source = user_data.get('source')
+        destination = user_data.get('destination')
+        status = user_data.get('status')
+                
+
+        query = "UPDATE parcels SET present_location = '{}' WHERE parcel_id = '{}'"
+        self.database.cursor.execute(query.format(status, parcelId))
+        return jsonify({'message': 'Parsel present location has been updated'}), 200
+
 
     def get_all_parcels(self):
         """retrieves all orders [GET] method"""
-        query = "SELECT * FROM parcels"
+        query = "SELECT * FROM orders"
         self.database.cursor.execute(query)
-        parcel = self.database.cursor.fetchall()
+        row = self.database.cursor.fetchall()
         results = []
         if row:
-            for parcel in parcels:
+            for parcel in row:
                 results.append({
                     'parcel_id':parcel[0],
                     'user_id':parcel[1],
@@ -212,15 +240,10 @@ class Userdata:
                     'source':parcel[3],
                     'destination':parcel[4],
                     'status':parcel[5]
+
                     })
             return jsonify(results)
         else:
-            item = None
-            return jsonify({'message': 'No orders found'}), 404
+            parcel = None
+            return {'message': 'No parcels found'}, 404
 
- parcel_id SERIAL PRIMARY KEY,
-            user_id INTEGER NOT NULL,
-            name_of_reciever VARCHAR(100) NOT NULL,
-            source VARCHAR(100) NOT NULL,
-            destination VARCHAR(100) NOT NULL,
-            status VARCHAR DEFAULT 
