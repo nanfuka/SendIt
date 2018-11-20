@@ -1,7 +1,7 @@
 import json
 from flask import jsonify
 
-
+order_list = []
 class Parcel:
     def __init__(self, order_id, user_id, email, status, item_to_be_shipped, weight, name_of_sender, name_of_reciever, destination, item_origin):
 
@@ -14,5 +14,5 @@ class Parcel:
         self.name_of_sender = name_of_sender
         self.name_of_reciever = name_of_reciever
         self.destination = destination
-
         self.item_origin = item_origin
+
