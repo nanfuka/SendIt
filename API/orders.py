@@ -1,5 +1,5 @@
-"""class that describes the parcel object"""
 class Parcel:
+    """class that describes the parcel object"""
     def __init__(self, order_id, user_id, email, status,
                  item_to_be_shipped, weight,
                  name_of_sender, name_of_reciever,
