@@ -5,7 +5,7 @@ from flask import jsonify
 
 from functools import wraps
 from flask import request
-from API.database_conn import Database
+from database_conn import Database
 import re
 
 class Userdata:
@@ -246,3 +246,5 @@ class Userdata:
         else:
             parcel = None
             return {'message': 'No parcels found'}, 404
+
+© 2018 GitHub, Inc.
