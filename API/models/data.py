@@ -34,16 +34,18 @@ class Userdata:
     
         if self.find_user_by_username(user_data['username']):
             return jsonify({'message': 'username already exists, please choose another username'}), 409
-            
+
+        elif user_data['username'].isspace():
+            return {'message': 'Field cannot be blank'}, 400    
+        
         specialCharacters = ['$','#','@','!','*']
 
         if any(char in specialCharacters for char in (user_data['username'])):
             return {'message': 'username cannot have special characters'}, 400
 
         elif self.find_user_by_email(user_data['email']):
-            return {'message': 'please use another email address'}, 409
-        elif user_data['username'].isspace():
-            return {'message': 'Field cannot be blank'}, 400
+            return jsonify({'message': 'please use another email address, that one is taken'}), 400
+
 
         else:
             query = ("INSERT INTO users(username, email, password)\
