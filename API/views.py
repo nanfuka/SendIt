@@ -71,9 +71,56 @@ def send_parcel():
 
         return jsonify({"message": "Enter your user_id please"}), 400
 
+    if email is None:
+
+        return jsonify({"message": "Enter your email please"}), 400
+    if item_to_be_shipped is None:
+
+        return jsonify({"message": "Enter your item_to_be_shipped please"}), 400
+
+    if weight is None:
+
+        return jsonify({"message": "Enter your weight please"}), 400
+
+    if name_of_reciever is None:
+
+        return jsonify({"message": "Enter your name_of_reciever please"}), 400
+
+    if item_origin is None:
+
+        return jsonify({"message": "Enter your item_origin please"}), 400
+
+    if destination is None:
+
+        return jsonify({"message": "Enter your destination please"}), 400
+
     if isinstance(user_id, str) or user_id ==" ":
 
         return jsonify({"message": "The input should be a number"}), 400
+
+    if isinstance(status, int) or status ==" ":
+
+        return jsonify({"message": "The input should be a string"}), 400
+
+    if isinstance(item_to_be_shipped, int) or item_to_be_shipped ==" ":
+
+        return jsonify({"message": "The input should be a string"}), 400
+
+    if isinstance(weight, str) or weight ==" ":
+
+        return jsonify({"message": "The input should be a number"}), 400
+
+    if isinstance(name_of_reciever, int) or name_of_reciever ==" ":
+
+        return jsonify({"message": "The input should be a string"}), 400
+
+    if isinstance(item_origin, int) or item_origin ==" ":
+
+        return jsonify({"message": "The input should be a string"}), 400
+
+    if isinstance(destination, int) or user_id ==" ":
+
+        return jsonify({"message": "The input should be a string"}), 400
         
     special_characters = ['$','#','@','!','*']
 
