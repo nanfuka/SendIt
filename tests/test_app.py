@@ -9,8 +9,9 @@ class AppTestCase(unittest.TestCase):
         """Initialises app and sets its variables"""
         app.testing = True
         self.tester = app.test_client()
-        self.order = {'user_id': 'deb', 'email': 'kalungi2k4@ds.com', 'status': 'pending'
-                      }
+        self.order = {'user_id': 'deb',
+                      'email': 'kalungi2k4@ds.com',
+                      'status': 'pending'}
 
     def tearDown(self):
         """Crashes down all initialized variables"""
@@ -20,7 +21,9 @@ class AppTestCase(unittest.TestCase):
         response = self.tester.get('/')
         self.assertTrue(200, response.status_code)
         self.assertIn(
-            'WELCOME TO SEND_IT APP, THE SOLUTION TO ALL YOUR COUREER SERVICES', str(response.data))
+            'WELCOME TO SEND_IT API, \
+            THE SOLUTION TO ALL YOUR COUREER SERVICES',
+            str(response.data))
 
 
 if __name__ == ('__main__'):

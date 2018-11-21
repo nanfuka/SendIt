@@ -76,7 +76,8 @@ def send_parcel():
         return jsonify({"message": "Enter your email please"}), 400
     if item_to_be_shipped is None:
 
-        return jsonify({"message": "Enter your item_to_be_shipped please"}), 400
+        return jsonify(
+            {"message": "Enter your item_to_be_shipped please"}), 400
 
     if weight is None:
 
@@ -94,41 +95,43 @@ def send_parcel():
 
         return jsonify({"message": "Enter your destination please"}), 400
 
-    if isinstance(user_id, str) or user_id ==" ":
+    if isinstance(user_id, str) or user_id == " ":
 
         return jsonify({"message": "The input should be a number"}), 400
 
-    if isinstance(status, int) or status ==" ":
+    if isinstance(status, int) or status == " ":
 
         return jsonify({"message": "The input should be a string"}), 400
 
-    if isinstance(item_to_be_shipped, int) or item_to_be_shipped ==" ":
+    if isinstance(item_to_be_shipped, int) or item_to_be_shipped == " ":
 
         return jsonify({"message": "The input should be a string"}), 400
 
-    if isinstance(weight, str) or weight ==" ":
+    if isinstance(weight, str) or weight == " ":
 
         return jsonify({"message": "The input should be a number"}), 400
 
-    if isinstance(name_of_reciever, int) or name_of_reciever ==" ":
+    if isinstance(name_of_reciever, int) or name_of_reciever == " ":
 
         return jsonify({"message": "The input should be a string"}), 400
 
-    if isinstance(item_origin, int) or item_origin ==" ":
+    if isinstance(item_origin, int) or item_origin == " ":
 
         return jsonify({"message": "The input should be a string"}), 400
 
-    if isinstance(destination, int) or user_id ==" ":
+    if isinstance(destination, int) or user_id == " ":
 
         return jsonify({"message": "The input should be a string"}), 400
-        
-    special_characters = ['$','#','@','!','*']
+
+    special_characters = ['$', '#', '@', '!', '*']
 
     if any(char in special_characters for char in data['username']):
         return {'message': 'username cannot have special characters'}, 400
 
-    if any(char in special_characters for char in (data['item_to_be_shipped'])):
-        return {'message': 'item_to_be_shipped cannot have special characters'}, 400
+    if any(char in special_characters
+           for char in (data['item_to_be_shipped'])):
+        return {'message':
+                'item_to_be_shipped cannot have special characters'}, 400
 
     if any(char in special_characters for char in (data['destination'])):
         return {'message': 'destination cannot have special characters'}, 400
@@ -137,7 +140,8 @@ def send_parcel():
         return {'message': 'item_origin cannot have special characters'}, 400
 
     if any(char in special_characters for char in (data['name_of_reciever'])):
-        return {'message': 'name_of_reciever cannot have special characters'}, 400
+        return {'message':
+                'name_of_reciever cannot have special characters'}, 400
 
     if email is None:
 
@@ -184,7 +188,6 @@ def send_parcel():
 
         return jsonify({"message": "The input should be a string"}), 400
 
-
     if data['item_to_be_shipped'].isspace() or \
             (' ' in data['item_to_be_shipped']):
 
@@ -211,7 +214,7 @@ def send_parcel():
 @app.route('/api/v1/parcels', methods=['GET'])
 def get_parcel():
     """using this route a user be able to view 
-    all of his parcel order history
+       all of his parcel order history
     """
 
     if order_list:
