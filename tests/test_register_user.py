@@ -35,4 +35,58 @@ class AppTestCase(unittest.TestCase):
         self.assertEqual(201, response.status_code)
         self.assertIn ("user successfully added", str(response.data))
 
+    def test_create_user_without_inputs(self):
+        """create a new user"""
+        self.user = {}
+        response = self.test_client.post('/api/v1/auth/signup', data=json.dumps(self.user), content_type ='application/json')
+        self.assertEqual(400, response.status_code)
+        self.assertIn ("All fields are required", str(response.data))
+
+    def test_create_user_without_email(self):
+        """create a new user"""
+        self.user = {'username': 'debbbs','password': 'debeatsfood'}
+        response = self.test_client.post('/api/v1/auth/signup', data=json.dumps(self.user), content_type ='application/json')
+        self.assertEqual(400, response.status_code)
+        self.assertIn ("Enter valid email", str(response.data))
+
+
+    def test_create_user_with_wrong_email_formart(self):
+        """create a new user"""
+        self.user = {
+            'username': 'debbbs', 'email': 'debgmail.com',
+            'password': 'debeatsfood'
+            }
+        self.user = {'username': 'debbbs','password': 'debeatsfood'}
+        response = self.test_client.post('/api/v1/auth/signup', data=json.dumps(self.user), content_type ='application/json')
+        self.assertEqual(400, response.status_code)
+        self.assertIn ("Enter valid email", str(response.data))
+
+    def test_create_user_without_username(self):
+        self.user = {
+             'email': 'deb@gmail.com',
+            'password': 'debeatsfood'
+            }
+        response = self.test_client.post('/api/v1/auth/signup', data=json.dumps(self.user), content_type ='application/json')
+        self.assertEqual(400, response.status_code)
+        self.assertIn ("Invalid username", str(response.data))
+
+    # def test_create_user_with_empty_strings(self):
+    #     self.user = {
+    #         'username': ' ', 'email': 'deb@gmail.com',
+    #         'password': 'debeatsfood'
+    #         }
+    #     response = self.test_client.post('/api/v1/auth/signup', data=json.dumps(self.user), content_type ='application/json')
+    #     self.assertEqual(400, response.status_code)
+    #     self.assertIn ("Invalid username", str(response.data))
+
+    # def test_create_user_with_special_characters(self):
+    #     self.user = {
+    #         'username': "deb%@@", 'email': 'deb@gmail.com',
+    #         'password': 'debeatsfood'
+    #         }
+    #     response = self.test_client.post('/api/v1/auth/signup', data=json.dumps(self.user), content_type ='application/json')
+    #     self.assertEqual(400, response.status_code)
+    #     self.assertIn ("Invalid username", str(response.data))
+
+
     
