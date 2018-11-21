@@ -1,23 +1,16 @@
 import psycopg2
-import os
 
-
-    
 class Database:
-        
     def __init__(self):
-        if os.getenv("DB_CONN") =="testdb":
-            db_name = "testdb"
-        else:   db_name = "sendit"
         try:
-            # postgresdb = 'sendit'
+            postgresdb = 'sendit'
             Host="localhost"
             User="postgres"
-            Password="test"
+            Password="postgres"
 
             
             self.connection = psycopg2.connect(
-                    database=db_name, host=Host, user=User,
+                    database=postgresdb, host=Host, user=User,
                     password=Password, port="5432"
                 )
             self.connection.autocommit = True
@@ -30,7 +23,7 @@ class Database:
             user_id SERIAL PRIMARY KEY,
             username VARCHAR(100),
             email VARCHAR(100),
-            password VARCHAR(100)"""
+            password VARCHAR(100))"""
         self.cursor.execute(create_table_users)
         self.connection.commit()
 
@@ -42,7 +35,6 @@ class Database:
             source VARCHAR(100) NOT NULL,
             destination VARCHAR(100) NOT NULL,
             status VARCHAR DEFAULT 'in_transit',
-            present_location VARCHAR(100) NOT NULL,
             FOREIGN KEY (user_id)
                 REFERENCES users(user_id)
         )"""
