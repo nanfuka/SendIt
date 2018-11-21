@@ -247,7 +247,7 @@ def api_get_all_orders_for_specific_user(user_id):
 
     if order:
 
-        return jsonify({"order": order[0]})
+        return jsonify({"order": order})
 
     return jsonify({'message': "the user_id is not available"})
 
