@@ -6,6 +6,7 @@ class RequestTestCase(BaseTestCase):
     def test_send_parcel(self):
         """ Tests whether a user can create a request successfully """
         parcel = {
+            "username":"deb",
             "destination": "europ",
             "email": "fd@yaho.com",
             "item_origin": "nsambya",

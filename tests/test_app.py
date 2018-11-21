@@ -20,10 +20,7 @@ class AppTestCase(unittest.TestCase):
     def test_index(self):
         response = self.tester.get('/')
         self.assertTrue(200, response.status_code)
-        self.assertIn(
-            'WELCOME TO SEND_IT API, \
-            THE SOLUTION TO ALL YOUR COUREER SERVICES',
-            str(response.data))
+        self.assertIn("b'WELCOME TO SEND_IT APP, THE SOLUTION TO ALL YOUR COUREER SERVICES'", str(response.data))
 
 
 if __name__ == ('__main__'):
