@@ -1,7 +1,10 @@
+<<<<<<< HEAD
+=======
 # SendIt
 [![Build Status](https://www.travis-ci.org/nanfuka/SendIt.svg?branch=develop)](https://www.travis-ci.org/nanfuka/SendIt)
 [![Coverage Status](https://coveralls.io/repos/github/nanfuka/SendIt/badge.svg?branch=develop)](https://coveralls.io/github/nanfuka/SendIt?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/1d54a16ededb4dc8aefe/maintainability)](https://codeclimate.com/github/nanfuka/SendIt/maintainability)
+>>>>>>> develop
 
 # description
 SendIT is a courier service that helps users deliver parcels to diferent destinations. SendIT provides courier quotes based on weight categories

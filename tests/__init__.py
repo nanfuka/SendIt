@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 from app import app
 import unittest
 import json
@@ -41,3 +43,4 @@ class BaseTestCase(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+>>>>>>> develop
