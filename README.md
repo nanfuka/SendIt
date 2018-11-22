@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 # SendIt
 [![Build Status](https://www.travis-ci.org/nanfuka/SendIt.svg?branch=develop)](https://www.travis-ci.org/nanfuka/SendIt)
 [![Coverage Status](https://coveralls.io/repos/github/nanfuka/SendIt/badge.svg?branch=develop)](https://coveralls.io/github/nanfuka/SendIt?branch=develop)

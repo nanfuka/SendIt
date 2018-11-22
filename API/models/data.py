@@ -47,7 +47,7 @@ class Userdata:
             return {'message': 'username cannot have special characters'}, 400
 
         elif self.find_user_by_email(user_data['email']):
-            return {'message': 'please use another email address'}, 409
+            return jsonify({'message': 'Email in use, please use another email address'}), 400
         elif user_data['username'].isspace():
             return {'message': 'Field cannot be blank'}, 400
 
@@ -59,8 +59,7 @@ class Userdata:
         self.database.cursor.execute(query.format(user_data['username'],
                                                   user_data['email'], user_data['password']))
 
-        parcel = {"username": user_data['username'],
-                  "email": user_data['email']}
+        parcel = {"email": user_data['email'], "username": user_data['username']}
 
         return jsonify({"message": "user successfully signedup", "user": parcel}), 201
 
@@ -109,7 +108,7 @@ class Userdata:
             #     datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
             #     }, 'customerkey')
             response = {'message': 'You are successfully logged in',
-                        'user': user_data}, 200
+                        'user': user_data['username']}, 200
             # 'token': token.decode('utf-8'), 'user':user_data}, 200
             return jsonify({"message": response})
 
@@ -190,35 +189,28 @@ class Userdata:
                                                   user_data['source'], user_data['destination'], user_data['status'], user_data['presentlocation']))
         return jsonify({"message": "order successfully created", "parcel": user_data})
 
-    def modify_destination(self, parcelId):
-        """this function allows for the user to change the destination of the parcel. however this can only happen if teh parcel is in transit"""
+    
+    def modi_destination(self, parcel_id):
+        """this function allows for teh user to change teh destination of teh parcel. however this can only happen if teh parcel is in transit"""
         user_data = request.get_json()
-        user_id = user_data.get('user_id')
-        name_of_reciever = user_data.get('name_of_reciever')
-        source = user_data.get('source')
         destination = user_data.get('destination')
-        status = user_data.get('status')
-
-        if not user_data:
-            return jsonify({'message': 'All fields are required'}), 400
-
-        if not user_id or user_id == " " or user_id == type(str):
-            return jsonify({'message': 'Invalid user_id'}), 400
-        if not name_of_reciever or name_of_reciever == " " or name_of_reciever == type(int):
-            return jsonify({'message': 'Invalid name_of_reciever'}), 400
-
-        if not source or source == " " or source == type(int):
-            return jsonify({'message': 'Invalid source'}), 400
-
-        if not destination or destination == " " or destination == type(int):
-            return jsonify({'message': 'invalid destination'}), 400
-
-        if not status or status == " " or status == type(int):
-            return jsonify({'message': 'invalid status'}), 400
-
         query = "UPDATE parcels SET destination = '{}' WHERE parcel_id = '{}'"
-        self.database.cursor.execute(query.format(destination, parcelId))
-        return jsonify({'message': 'parcel destination has been updated'}), 200
+        self.database.cursor.execute(query.format(destination, parcel_id))
+        if user_data:
+            return jsonify({"current_parsel": user_data, "message": "parsel destination has been updated"}), 200
+        return jsonify({"fail": "the parcel_id is not available"})
+            
+    
+
+    def modi_present_location(self, parcel_id):
+        """this function allows for teh user to change teh destination of teh parcel. however this can only happen if teh parcel is in transit"""
+        user_data = request.get_json()
+        presentlocation = user_data.get('presentlocation')
+        query = "UPDATE parcels SET presentlocation = '{}' WHERE parcel_id = '{}'"
+        self.database.cursor.execute(query.format(presentlocation, parcel_id))
+        if user_data:
+            return jsonify({"message": "parsel presentlocations has been updated", "presentlocation": user_data}), 200
+        return jsonify({"fail": "the parcel presentlocation has not been modified"})
 
     def change_status(self, parcelId):
         """this function allows for teh user to change teh destination of teh parcel. however this can only happen if teh parcel is in transit"""
@@ -227,17 +219,17 @@ class Userdata:
         query = "UPDATE parcels SET status = '{}' WHERE parcel_id = '{}'"
         self.database.cursor.execute(query.format(status, parcelId))
         if user_data:
-            return jsonify({"message": "parsel status has been updated", "current_parsel": user_data}), 200
+            return jsonify({"message": "This parcel has been cancelled", "current_parsel": user_data}), 200
         return jsonify({"fail": "the parcel_id has not been modified"})
 
-    def change_present_parsel_location(self, parcelId):
-        """this function allows for teh user to change teh destination of teh parcel. however this can only happen if teh parcel is in transit"""
-        user_data = request.get_json()
-        status = user_data.get('status')
+    # def change_present_parsel_location(self, parcelId):
+    #     """this function allows for teh user to change teh destination of teh parcel. however this can only happen if teh parcel is in transit"""
+    #     user_data = request.get_json()
+    #     status = user_data.get('status')
 
-        query = "UPDATE parcels SET present_location = '{}' WHERE parcel_id = '{}'"
-        self.database.cursor.execute(query.format(status, parcelId))
-        return jsonify({'message': 'Parsel present location has been updated'}), 200
+    #     query = "UPDATE parcels SET present_location = '{}' WHERE parcel_id = '{}'"
+    #     self.database.cursor.execute(query.format(status, parcelId))
+    #     return jsonify({'message': 'Parsel present location has been updated'}), 200
 
     def get_all_parcels(self):
         """
@@ -258,28 +250,46 @@ class Userdata:
                     'status': parcel[5]
 
                 })
-            return jsonify(results)
+            return jsonify({"View all parcels": results})
         else:
-            parcel = None
-            return jsonify({'message': 'No parcels found'}), 404
+            return jsonify({'parcels': 'No parcels found'}), 404
 
     def find_parcel_by_parcel_id(self, parcel_id):
         query = "SELECT * FROM  parcels WHERE parcel_id = '{}'"
         self.database.cursor.execute(query.format(parcel_id))
         row = self.database.cursor.fetchall()
+        results = []
         if row:
-            return row
+            for parcel in row:
+                results.append({
+                    'parcel_id': parcel[0],
+                    'user_id': parcel[1],
+                    'name_of_reciever': parcel[2],
+                    'source': parcel[3],
+                    'destination': parcel[4],
+                    'status': parcel[5]
+
+                })
+            return jsonify({"parcel": results})
         return jsonify({"fail": "the parcel is not available"})
 
+    def find_all_parcels_for_a_particular_user_id(self, user_id):
+        query = "SELECT * FROM  parcels WHERE user_id = '{}'"
+        self.database.cursor.execute(query.format(user_id))
+        row = self.database.cursor.fetchall()
+        results = []
+        if row:
+            for parcel in row:
+                results.append({
+                    'parcel_id': parcel[0],
+                    'user_id': parcel[1],
+                    'name_of_reciever': parcel[2],
+                    'source': parcel[3],
+                    'destination': parcel[4],
+                    'status': parcel[5]
 
-def modify_present_location(self, parcelId):
-    """this function allows for teh user to change
-     the destination of teh parcel. however this can 
-     only happen if teh parcel is in transit"""
-    user_data = request.get_json()
-    presentlocation = user_data.get('presentlocation')
-    query = "UPDATE parcels SET presentlocationpresentlocation = '{}' WHERE parcel_id = '{}'"
-    self.database.cursor.execute(query.format(presentlocation, parcelId))
-    if user_data:
-        return jsonify({"message": "parsel presentlocation has been updated", "current_parsel": user_data}), 200
-    return jsonify({"fail": "the presentlocation has not been modified"})
+                })
+            return jsonify({"parcels": results})
+        return jsonify({"fail": "the user_id you entered is not available"})
+                    
+
