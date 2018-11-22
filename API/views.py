@@ -1,6 +1,9 @@
 from flask import Flask, jsonify, request
+
 from api.models.data import Userdata
 # from flasgger import Swagger, swag_from
+
+
 
 
 
@@ -11,11 +14,14 @@ app = Flask(__name__)
 #     "description": "Developed by Kalungi Deborah"
 # }})
 
+
 userdata = Userdata()
 
+
 @app.route('/')
+
 def index():
-    return "WELCOME TO FAST FOOD FAST APPLICATION (CHALLENGE 3)",201
+    return "SENDIT (CHALLENGE 3)",201
 
 @app.route('/api/v1/auth/signup', methods=['POST'])
 def register_user():
