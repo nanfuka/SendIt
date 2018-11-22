@@ -1,29 +1,58 @@
 from flask import Flask, jsonify, request
-
+from functools import wraps
+from api import app
 from api.models.data import Userdata
-# from flasgger import Swagger, swag_from
-
-
-
-
-
-app = Flask(__name__)
-# api = Api(app)
-# swagger = Swagger(app, template = {"info":{{
-#     "title": "sendIT API",
-#     "description": "Developed by Kalungi Deborah"
-# }})
+from flasgger import Swagger, swag_from
+from flask_jwt_extended import (JWTManager,
+                                jwt_required, 
+                                create_access_token,
+                                get_jwt_identity)
 
 
 userdata = Userdata()
 
 
-@app.route('/')
+Swagger(app)
+    
+app.config['USER_KEY'] = 'mylovelykids'
+app.config['ADMIN_KEY'] = 'administratorsareannoying'
 
+# def user_token(f):
+#     @wraps(f)
+#     def decorated(*args, **kwargs):
+#         token = request.headers.get('Authorization')
+#         if not token:
+#             return jsonify({'message': 'Token is missing'}), 401
+#         try:
+#             data=jwt.decode(token[7:], app.config['USER_KEY'])
+            
+#         except:
+#             return jsonify({'message': 'Token is invalid'}), 401
+#         return f(data,*args, **kwargs)
+#     return decorated
+
+
+# def admin_token(f):
+#     @wraps(f)
+#     def decorated(*args, **kwargs):
+#         token = request.headers.get('Authorization')
+#         if not token:
+#             return {'message': 'You are not authorised to access this route'}, 403
+#         try:
+#             jwt.decode(token[7:], app.config['ADMIN_KEY'])
+#         except:
+#             return {'message': 'Token is invalid'}, 403
+#         return f(*args, **kwargs)
+#     return decorated
+
+
+@app.route('/', methods=['GET'])
 def index():
-    return "WELCOME TO SENDIT (CHALLENGE 3)",201
+    return "WELCOME TO SENDIT CHALLENGE3", 200
+
 
 @app.route('/api/v1/auth/signup', methods=['POST'])
+@swag_from('../docs/signup.yml')
 def register_user():
     """signup a new user"""
     return userdata.create_user()
@@ -34,7 +63,6 @@ def login_user():
     a token which the user uses to access private routes
     """
     return userdata.login_user()
-
 @app.route('/api/v1/users/<userId>/parcels', methods=['GET'])
 def find_all_parcels_for_a_particular_user_id(userId):
     """This function returns all parcels for a particular user_id
@@ -53,6 +81,7 @@ def modify_parsel_delivery(parcelId):
     return userdata.change_status(parcelId)
 
 @app.route('/api/v1/parcels')
+@jwt_required
 def view_parcels():
     """This route can retrieve all parcels of a specific user"""
     return userdata.get_all_parcels()

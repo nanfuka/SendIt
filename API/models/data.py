@@ -2,20 +2,25 @@ from werkzeug.security import safe_str_cmp
 import jwt
 import datetime
 from flask import jsonify
+from flask_jwt_extended import (JWTManager, jwt_required, create_access_token, get_jwt_identity)
 
 from functools import wraps
 from flask import request
 from database_conn import Database
 import re
+from views import app
 
-ADMIN_NAME = "admin"
-ADMIN_PASSWORD = "password"
+
+jwt = JWTManager(app)
+# ADMIN_NAME = "admin"
+# ADMIN_PASSWORD = "password"
+
+
 class Userdata:
     def __init__(self):
         self.database = Database()
         self.database.create_table_users()
         self.database.create_table_parsels()
-
 
     def create_user(self):
         user_data = request.get_json()
@@ -102,25 +107,26 @@ class Userdata:
         query = "SELECT * FROM users WHERE username = '{}'"
         self.database.cursor.execute(query.format(username))
         if self.find_user_by_name(user_data['username']) and self.find_user_by_password(user_data['password']):
-            # token = jwt.encode({
-            #     'username': user_data['username'],
-            #     'exp':
-            #     datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
-            #     }, 'customerkey')
-            response = {'message': 'You are successfully logged in',
-                        'user': user_data['username']}, 200
-            # 'token': token.decode('utf-8'), 'user':user_data}, 200
-            return jsonify({"message": response})
-
-        elif user_data['username'] == ADMIN_NAME and user_data['password'] == ADMIN_PASSWORD:
             token = jwt.encode({
                 'username': user_data['username'],
                 'exp':
                 datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
-            }, 'adminkey')
-            return jsonify({'message': 'you have logged in as the adminstrator',
-                            'token': token.decode('utf-8')}), 200
+            }, 'userkey')
+            response = {'message': 'You are successfully logged in',
+                        'user': user_data['username'],
+            'token': token.decode('utf-8'), 'user': user_data}
+            return jsonify({"message": response})
 
+        elif user_data['username'] == 'admin' and user_data['password'] == 'admin':
+            # token = jwt.encode({
+            #     'username': user_data['username'],
+            #     'exp':
+            #     datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
+            #     }, 'adminkey')
+            # return jsonify({'message': 'you have logged in as the adminstrator',
+            #         'token': token.decode('utf-8')}), 200
+            access_token =create_access_token(identity=user_data['username'])
+            return jsonify(access_token=access_token, message="you have successfully loggedin"), 200
         return jsonify({"message": "username or password is incorrect"}), 400
 
     def find_user_by_name(self, username):
