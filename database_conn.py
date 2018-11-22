@@ -35,6 +35,7 @@ class Database:
             source VARCHAR(100) NOT NULL,
             destination VARCHAR(100) NOT NULL,
             status VARCHAR DEFAULT 'in_transit',
+            presentlocation VARCHAR(100) NOT NULL,
             FOREIGN KEY (user_id)
                 REFERENCES users(user_id)
         )"""

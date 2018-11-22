@@ -1,0 +1,28 @@
+Register User
+---
+tags:
+    - Signup
+
+parameters:
+    - in: body
+      name: body
+      required: true
+      type: string
+      description: Register new user
+      schema:
+        id: add user
+        properties:
+          username:
+            type: string
+            example: debra
+          email:
+            type: string
+            example: kalungi2k6@gmail.com
+          password:
+            type: string
+            example: testpanca
+responses:
+  200:
+    description: user has successfully registeref
+
+  400: username already exists
